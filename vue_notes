@@ -1,0 +1,52 @@
+1.数据绑定，使用{{}}的方式文本插值
+2.v-once 指令，你也能执行一次性地插值，当数据改变时，插值处的内容不会更新。例：<span v-once>This will never change: {{ msg }}</span>；
+3.v-html 指令，会输出真正的 HTML，被插入的内容都会被当做 HTML， 数据绑定会被忽略。例：<div v-html="rawHtml"></div>；
+4.{{}}不能在 HTML 属性中使用，应使用 v-bind 指令：<div v-bind:id="dynamicId"></div>
+5.v-bind缩写：<!-- 完整语法 --><a v-bind:href="url"></a>
+<!-- 缩写 --><a :href="url"></a>
+7.v-on缩写：<!-- 完整语法 --><a v-on:click="doSomething"></a>
+<!-- 缩写 --><a @click="doSomething"></a>
+8.函数：computed或者methods，差别是methods是没有缓存的，每次重新渲染的时候，method 调用总会执行函数；而computed则是在它的相关依赖发生改变时才会重新取值
+例：var vm = new Vue({
+  el: '#example',
+  data: {
+    message: 'Hello'
+  },
+  computed: {
+    // a computed getter
+    reversedMessage: function () {
+      // `this` points to the vm instance
+      return this.message.split('').reverse().join('')
+    }
+  }
+})
+9.方法 $watch 用于观察 Vue 实例上的数据变动。
+例：var vm = new Vue({
+  el: '#demo',
+  data: {
+    firstName: 'Foo',
+    lastName: 'Bar',
+    fullName: 'Foo Bar'
+  },
+  watch: {
+    firstName: function (val) {
+      this.fullName = val + ' ' + this.lastName
+    },
+    lastName: function (val) {
+      this.fullName = this.firstName + ' ' + val
+    }
+  }
+})
+但可以用computed来替代：
+var vm = new Vue({
+  el: '#demo',
+  data: {
+    firstName: 'Foo',
+    lastName: 'Bar'
+  },
+  computed: {
+    fullName: function () {
+      return this.firstName + ' ' + this.lastName
+    }
+  }
+})
